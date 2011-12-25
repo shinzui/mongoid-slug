@@ -117,7 +117,7 @@ module Mongoid #:nodoc:
 
     def find_unique_slug
       # TODO: An epic method which calls for refactoring.
-      slug = slug_builder.call(self).to_url
+      slug = generate_url(slug_builder.call(self))
 
       # Regular expression that matches slug, slug-1, slug-2, ... slug-n
       # If slug_name field was indexed, MongoDB will utilize that index to
@@ -156,6 +156,11 @@ module Mongoid #:nodoc:
       end
 
       slug
+    end
+
+    def generate_url(string)
+      result = string.strip_html_tags.convert_smart_punctuation.convert_accented_entities.convert_misc_entities.convert_misc_characters.collapse
+      result.downcase.replace_whitespace("-").collapse("-")
     end
 
     def generate_slug

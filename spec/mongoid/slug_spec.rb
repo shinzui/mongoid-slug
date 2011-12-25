@@ -140,7 +140,7 @@ module Mongoid
         author.first_name = "Félix"
         author.last_name  = "Guattari"
         author.save
-        author.to_param.should eql "felix-guattari"
+        author.to_param.should eql "félix-guattari"
       end
 
       it "generates a unique slug by appending a counter to duplicate text" do
@@ -286,25 +286,25 @@ module Mongoid
       it "slugs Cyrillic characters" do
         book.title = "Капитал"
         book.save
-        book.to_param.should eql "kapital"
+        book.to_param.should eql book.title
       end
 
       it "slugs Greek characters" do
         book.title = "Ελλάδα"
         book.save
-        book.to_param.should eql "ellada"
+        book.to_param.should eql book.title
       end
 
       it "slugs Chinese characters" do
         book.title = "中文"
         book.save
-        book.to_param.should eql 'zhong-wen'
+        book.to_param.should eql book.title
       end
 
       it "slugs non-ASCII Latin characters" do
         book.title = 'Paul Cézanne'
         book.save
-        book.to_param.should eql 'paul-cezanne'
+        book.to_param.should eql 'paul-cézanne'
       end
     end
 
